@@ -9,7 +9,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { RegisterComponent } from './register/register/register.component';
-
+import { StoreModule } from '@ngrx/store';
+import { addUserModel } from './reducers/user.reducer';
 import * as firebase from 'firebase';
 
 firebase.initializeApp(environment.firebase);
@@ -26,6 +27,8 @@ firebase.initializeApp(environment.firebase);
     AngularFireAuthModule,
     AngularFirestoreModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({loggedInUser: addUserModel})
+
 
   ],
   providers: [],
