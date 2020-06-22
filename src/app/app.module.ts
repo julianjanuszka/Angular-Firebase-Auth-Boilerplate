@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register/register.component';
 import { StoreModule } from '@ngrx/store';
 import { addUserModel } from './reducers/user.reducer';
 import * as firebase from 'firebase';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 firebase.initializeApp(environment.firebase);
 
@@ -19,6 +20,7 @@ firebase.initializeApp(environment.firebase);
   declarations: [
     AppComponent,
     RegisterComponent,
+    LandingPageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
