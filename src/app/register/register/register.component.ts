@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from 'src/app/core/auth.service';
 import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-register',
 	templateUrl: './register.component.html',
-	styleUrls: ['./register.component.scss']
+	styleUrls: ['./register.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Default
 })
 export class RegisterComponent implements OnInit {
 	myGroup: FormGroup;
@@ -22,6 +23,8 @@ export class RegisterComponent implements OnInit {
 	}
 	errorMessage = '';
 	successMessage = '';
+
+	passResetSent: boolean = false;
 	ngOnInit() {
 		this.myGroup = new FormGroup({
 			firstName: new FormControl(),
@@ -30,7 +33,7 @@ export class RegisterComponent implements OnInit {
 	 });
 	}
 
-	tryRegister(value){
+	tryRegister(value) {
 		this.authService.doRegister(value)
 			.then(res => {
 				console.log(res);
@@ -43,6 +46,10 @@ export class RegisterComponent implements OnInit {
 			})
 	}
 
+	forgotPassword(value) {
+		this.authService.resetPasswordInit(value)
+			.then(res => { this.passResetSent = true; }, err => {console.log(err)} );
+	}
 	async tryLogin(value) {
 		this.authService.doLogin(value)
 			.then(res => {

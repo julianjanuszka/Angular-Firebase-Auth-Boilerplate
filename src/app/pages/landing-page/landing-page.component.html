@@ -1,2 +1,9 @@
-<h1>Welcome {{loggedInUser.userEmail}} </h1>
+<h1>Welcome {{userService.userEmail()}} </h1>
+<input type="text" class="form-control" #thought>
+<button (click)="postThought(thought.value)">POST THOUGHT</button>
 <button (click)="authService.signOut()">SIGN OUT</button>
+
+<h1>MY POSTS</h1>
+<li *ngFor="let post of userPosts">
+    {{ post.body }}
+</li>

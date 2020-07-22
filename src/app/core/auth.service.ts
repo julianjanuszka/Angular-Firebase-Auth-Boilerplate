@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
+	public uid;
   constructor(
 	public afAuth: AngularFireAuth,
 	public store: Store<AppState>, 
@@ -27,15 +28,27 @@ export class AuthService {
 
   doLogin(value) {
 	return new Promise((resolve, reject) => {
-	  firebase.auth().signInWithEmailAndPassword(value.email,value.password)
-		.then(res => {
-		  resolve(res);
-		}, err => {
-		  reject(err);
-		})
-	})
+		firebase.auth().setPersistence('session').then(() => {
+			firebase.auth().signInWithEmailAndPassword(value.email,value.password)
+			.then(res => {
+			  resolve(res);
+			  this.uid = res.user.uid;
+			}, err => {
+			  reject(err);
+			});
+		});
+	});
   }
 
+  resetPasswordInit(email: string) { 
+	return new Promise((resolve, reject) => {
+		firebase.auth().sendPasswordResetEmail(email)
+		.then(res => {
+		  resolve(res);
+		}, err => reject(err))
+	  })
+  } 
+	
   loggedInUser() {
 	let coins = this.store.select('loggedInUser');
 	console.log('JULIAN ', coins);

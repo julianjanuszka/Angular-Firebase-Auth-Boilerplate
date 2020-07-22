@@ -19,10 +19,12 @@
   </div>
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-primary btn-block" (click)="facebookLogin()">Register with Facebook</button>
+      <button [disabled]="passResetSent" type="button" class="btn btn-primary btn-block" (click)="forgotPassword(myGroup.value.email)">
+        <span *ngIf="!passResetSent">Forgot Password?</span>
+        <span *ngIf="passResetSent">Password Reset Sent</span>
+      </button>
     </div>
   </div>
-  <!-- Other authentication providers: full code in GitHub Repository -->
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
       <p>Already have an account? <button type="login" (click)="tryLogin(myGroup.value)">LOGIN</button></p>

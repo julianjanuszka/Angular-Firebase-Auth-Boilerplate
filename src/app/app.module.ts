@@ -13,27 +13,34 @@ import { StoreModule } from '@ngrx/store';
 import { addUserModel } from './reducers/user.reducer';
 import * as firebase from 'firebase';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { PostService } from './services/post.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { UserService } from './services/user.service';
 
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RegisterComponent,
-    LandingPageComponent,
+	AppComponent,
+	RegisterComponent,
+	LandingPageComponent,
   ],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
-    BrowserModule,
-    AppRoutingModule,
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    ReactiveFormsModule,
-    StoreModule.forRoot({loggedInUser: addUserModel})
-
+	AngularFireModule.initializeApp(environment.firebase),
+	BrowserModule,
+	AppRoutingModule,
+	AngularFireAuthModule,
+	AngularFirestoreModule,
+	ReactiveFormsModule,
+	StoreModule.forRoot({loggedInUser: addUserModel}),
 
   ],
-  providers: [],
+  providers: [
+	  PostService,
+	  UserService,
+	  AngularFireDatabase,
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
